@@ -15,7 +15,7 @@ Or add the dependency to your `shard.yml`:
    ```yaml
    dependencies:
      concurrent_revisions:
-       github: TobiasGSmollett/concurrent_revisions
+       github: TobiasGSmollett/concurrent_revisions.cr
    ```
 
 Run `shards install`.

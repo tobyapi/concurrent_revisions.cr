@@ -7,7 +7,7 @@
 Clone repository manually:
 
 ```sh
-git clone https://github.com/TobiasGSmollett/concurrent_rivisions.cr && cd concurrent_revisions.cr/
+git clone https://github.com/TobiasGSmollett/concurrent_revisions.cr && cd concurrent_revisions.cr/
 ```
 
 Or add the dependency to your `shard.yml`:

@@ -5,14 +5,12 @@ require "./segment"
 module ConcurrentRevisions
   class Cumulative(T)
     include Isolation
-
-    # original, master, revised -> T
-    @merge_func : (T, T, T) -> T
-
+    
     # map from version to value
     @versions : Hash(Int32, T)
 
-    def initialize(value : T, @merge_func)
+    # argumetns of @merge_func are (original, master, reviesd)
+    def initialize(value : T, &@merge_func : T, T, T -> T)
       @versions = {} of Int32 => T
       set(value)
     end

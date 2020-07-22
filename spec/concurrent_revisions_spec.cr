@@ -27,11 +27,9 @@ describe ConcurrentRevisions do
   end
 
   it "Example 2" do
-    merge = ->(original : Int32, master : Int32, revised : Int32){
+    x = Cumulative(Int32).new(0) do |original, master, revised|
       master + revised - original
-    }
-
-    x = Cumulative(Int32).new(0, merge)
+    end
 
     r2 = nil
 

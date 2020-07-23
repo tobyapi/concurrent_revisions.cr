@@ -15,4 +15,4 @@ jobs:
     - name: Get dependencies
       run: shards install
     - name: Run tests
-      run: crystal spec spec/concurrent_revisions_spec.cr
+      run: crystal spec -Dpreview_mt spec/concurrent_revisions_spec.cr

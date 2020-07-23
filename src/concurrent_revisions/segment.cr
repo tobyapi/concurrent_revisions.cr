@@ -9,19 +9,18 @@ module ConcurrentRevisions
 
     property refcount : Int32
 
-    @@version_count = 0
+    @@version_count = Atomic(Int32).new(0)
 
     # for test
     # :nodoc:
     def self.version_count=(value : Int32)
-      @@version_count = value
+      @@version_count = Atomic(Int32).new(value)
     end
 
     def initialize(@parent = nil)
       @parent.as(Segment).refcount += 1 if !@parent.nil?
       @written = [] of Isolation
-      @version = @@version_count
-      @@version_count += 1
+      @version = @@version_count.add(1)
       @refcount = 1
     end
 

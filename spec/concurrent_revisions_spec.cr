@@ -6,22 +6,16 @@ describe ConcurrentRevisions do
   it "Example" do  
     x = Versioned(Int32).new(0)
     y = Versioned(Int32).new(0)
-  
+
     r : Revision = rfork do
       x.set(1)
-  
-      Revision.current_revision.current.version.should eq 2
-  
       rfork { }
       x.set(y.get)
-  
-      Revision.current_revision.current.version.should eq 3
     end
-    Revision.current_revision.current.version.should eq 1
-  
+
     x.set(2)
     rjoin(r)
-  
+
     x.get.should eq 0
     y.get.should eq 0
   end

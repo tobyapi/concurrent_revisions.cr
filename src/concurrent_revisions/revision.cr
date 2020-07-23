@@ -6,9 +6,6 @@ module ConcurrentRevisions
     @channel = Channel(Nil).new
 
     def initialize(&@block)
-    end
-
-    def run
       spawn do
         @block.call
         @channel.send(nil)
@@ -37,13 +34,12 @@ module ConcurrentRevisions
     end
 
     def fork(&action)
-      seg = Segment.new(@current)
       r = Revision.new(@current, Segment.new(@current))
       # cannot bring refcount to zero
       @current.release
-      @current = seg
+      @current = Segment.new(@current)
 
-      r.task = Task.new {
+      r.task = Task.new do
         previous = @@current_revision
         @@current_revision = r
         begin
@@ -51,8 +47,8 @@ module ConcurrentRevisions
         ensure
           @@current_revision = previous
         end
-      }
-      r.task.as(Task).run
+      end
+      
       r
     end
 
